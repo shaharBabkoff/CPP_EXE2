@@ -1,4 +1,4 @@
-# מטלה 1 - גרפים 
+# מטלה 2 - גרפים 
 
 id:324207935
 email:shbabkoff123@gmail.com

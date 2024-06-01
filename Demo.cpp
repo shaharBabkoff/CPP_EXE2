@@ -44,7 +44,7 @@ int main()
     cout<<g2<<endl;
     -g2;
     cout<<g2<<endl;
-    --g2;
+     --g2;
     cout<<g2<<endl;
     g2--;
     cout<<g2<<endl;

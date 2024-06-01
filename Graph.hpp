@@ -34,8 +34,8 @@ Graph& operator-=(const Graph& other);
 Graph& operator+();
 Graph& operator++();//++g
 Graph& operator--();//--g
-Graph& operator++(int num);//g++
-Graph& operator--(int num);//g--
+Graph operator++(int num);//g++
+Graph operator--(int num);//g--
 Graph& operator-();
 Graph& operator*=(int num);
 Graph& operator/=(int num);

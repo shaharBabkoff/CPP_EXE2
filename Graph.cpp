@@ -150,7 +150,7 @@ namespace ariel
         }
 
         Graph newGraph;
-        newGraph.loadGraph(newAdjMat, isDirected_);
+        newGraph.loadGraph(newAdjMat, (isDirected_||other.isDirected()));
         return newGraph;
     }
 
@@ -171,7 +171,7 @@ namespace ariel
         }
 
         Graph newGraph;
-        newGraph.loadGraph(newAdjMat, isDirected_);
+        newGraph.loadGraph(newAdjMat, (isDirected_||other.isDirected()));
         return newGraph;
     }
     Graph &Graph::operator+=(int num)
@@ -239,6 +239,7 @@ namespace ariel
     }
     Graph &Graph::operator/=(int num)
     {
+        
         for (size_t i = 0; i < verticesNum_; i++)
         {
             for (size_t j = 0; j < verticesNum_; j++)
@@ -256,21 +257,27 @@ namespace ariel
     {
         return *this;
     }
-    Graph &Graph::operator++()
+    Graph &Graph::operator++()//++g
     {
         return operator+=(1);
     }
-    Graph &Graph::operator--()
+    Graph &Graph::operator--()//--g
     {
         return operator-=(1);
     }
-    Graph &Graph::operator++(int num)
+    Graph Graph::operator++(int num)//g++
     {
-        return operator+=(1);
+        Graph newGrap;
+        newGrap.loadGraph(adjacenctMat_);
+        operator+=(1);
+        return newGrap;
     }
-    Graph &Graph::operator--(int num)
+    Graph Graph::operator--(int num)//g--
     {
-        return operator-=(1);
+         Graph newGrap;
+        newGrap.loadGraph(adjacenctMat_);
+        operator-=(1);
+        return newGrap;
     }
     Graph Graph::operator*(const Graph &other)
     {
@@ -299,25 +306,18 @@ namespace ariel
     {
         if (other.verticesNum_ == verticesNum_)
         {
-            size_t counter = 0;
             for (size_t i = 0; i < verticesNum_; i++)
             {
                 for (size_t j = 0; j < verticesNum_; j++)
                 {
-                    if (adjacenctMat_[i][j] == other.adjacenctMat_[i][j])
+                    if (!(adjacenctMat_[i][j] == other.adjacenctMat_[i][j]))
                     {
-                        counter++;
+                        return false;
                     }
                 }
             }
-            if (counter == verticesNum_ * verticesNum_)
-            {
-                return true;
-            }
-        }
-        if (!(operator<(other)) && !(operator>(other)))
-        {
             return true;
+          
         }
         return false;
     }
@@ -337,7 +337,7 @@ namespace ariel
             {
                 for (size_t j = 0; j < verticesNum_; j++)
                 {
-                    if (adjacenctMat_[i][j]!=0 &&other.adjacenctMat_[i][j]!=0)
+                    if (!(adjacenctMat_[i][j] xor adjacenctMat_[i][j]))
                     {
                         count++;
                     }
@@ -364,40 +364,10 @@ namespace ariel
     }
 
     bool Graph::operator<(const Graph &other)
-   {
-    int count = 0;
-        if (other.verticesNum_ >verticesNum_)
-        {
-            for (size_t i = 0; i < verticesNum_; i++)
-            {
-                for (size_t j = 0; j < verticesNum_; j++)
-                {
-                    if (adjacenctMat_[i][j]!=0 && other.adjacenctMat_[i][j]!=0)
-                    {
-                        count++;
-                    }
-                }
-            }
-            if (count == verticesNum_ *verticesNum_)
-            {
-                return true;
-            }
-        }
-        if (edgesNum_ <other.edgesNum_)
-        {
-            return true;
-        }
-        if (edgesNum_ == other.edgesNum_)
-        {
-            if (verticesNum_ < other.verticesNum_)
-            {
-                return true;
-            }
-        }
-
-        return false;
+    {
+        return (*this != other)&&(!(*this>other));
     }
-
+   
     bool Graph::operator<=(const Graph &other)
    {
         if (*this<other||*this ==other)

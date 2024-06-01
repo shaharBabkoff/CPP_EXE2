@@ -26,8 +26,8 @@ TEST_CASE("Test graph addition")
      CHECK(g3.graphToString() == "[4, 6, 5]\n[6, 4, 7]\n[5, 7, 4]");
     g3+=g2;
     CHECK(g3.graphToString() == "[4, 7, 6]\n[7, 4, 9]\n[6, 9, 4]");
-    g3++;
-    CHECK(g3.graphToString() == "[5, 8, 7]\n[8, 5, 10]\n[7, 10, 5]");
+   // g3++;
+    CHECK(g3++.graphToString() == "[4, 7, 6]\n[7, 4, 9]\n[6, 9, 4]");
     ++g3;
     CHECK(g3.graphToString() == "[6, 9, 8]\n[9, 6, 11]\n[8, 11, 6]");
 
@@ -157,8 +157,9 @@ TEST_CASE("algorithms"){
     CHECK(Algorithms::shortestPath(g1,1,2)=="1->2");
     CHECK(Algorithms::negativeCycle(g1)=="No negative cycle detected.");
     -g1;
-    CHECK(Algorithms::negativeCycle(g1)=="2 -> 1 -> 2");
+    
     CHECK(Algorithms::shortestPath(g1,1,2)=="-1");
+    CHECK(Algorithms::negativeCycle(g1)=="2 -> 1 -> 2");
 
 
 }
